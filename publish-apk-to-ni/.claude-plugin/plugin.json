@@ -1,0 +1,7 @@
+{
+  "name": "publish-apk-to-ni",
+  "description": "Publish an APK build to Network International's (N-Genius) SFTP server (/343/Inbound/APK) via the Teleport tunnel, then prepare the release notification email as a Gmail draft. Prompts for the SFTP password and signer name at runtime; stores no credentials.",
+  "version": "1.0.0",
+  "author": { "name": "Qlub SoftPOS Team", "email": "softpos_team@qlub.io" },
+  "keywords": ["ni", "network-international", "ngenius", "apk", "sftp", "softpos", "release"]
+}
