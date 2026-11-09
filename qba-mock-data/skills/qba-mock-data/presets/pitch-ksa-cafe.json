@@ -1,0 +1,20 @@
+{
+  "name": "pitch-ksa-cafe",
+  "country": "sa",
+  "venues": 1,
+  "cuisine": "cafe",
+  "days": 45,
+  "txPerDay": [
+    40,
+    90
+  ],
+  "avgTicket": 45,
+  "tipShare": 0.25,
+  "tipRate": 0.08,
+  "peakHours": [
+    9,
+    16,
+    22
+  ],
+  "seed": 11
+}

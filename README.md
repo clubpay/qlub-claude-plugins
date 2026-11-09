@@ -10,6 +10,13 @@ Uploads an Android APK to Network International's (N-Genius) SFTP server
 notification email as a Gmail draft. It **asks for the SFTP password and the
 signer's name at runtime and stores no credentials**.
 
+### `qba-mock-data`
+Describe what a pitch needs ("UAE café group, 3 branches, 30 days, high tips") and
+get synthetic demo venues with payment and tip history on **staging**, ready to show
+in QBA. It talks to the staging-only admin API with **your own staging admin token**,
+which you store once with `mockdata.sh login`; it is never sent to the chat. Backend:
+admin-backend `admin/mock-data` (VP-3599). Panel squad owns it.
+
 ## Install (per teammate)
 
 ```bash
@@ -18,6 +25,7 @@ signer's name at runtime and stores no credentials**.
 
 # 2) Install the plugin
 /plugin install publish-apk-to-ni@qlub-tools
+/plugin install qba-mock-data@qlub-tools
 
 # 3) Reload
 /reload-plugins

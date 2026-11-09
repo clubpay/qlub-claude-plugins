@@ -1,0 +1,7 @@
+{
+  "name": "qba-mock-data",
+  "description": "Describe a pitch (\"UAE café group, 3 branches, 30 days\") and get synthetic demo venues with payment history on staging, ready to show in QBA. Uses your own staging admin login; stores the token only on your machine.",
+  "version": "1.0.0",
+  "author": { "name": "Qlub Panel Squad" },
+  "keywords": ["qba", "demo", "pitch", "mock-data", "staging", "panel"]
+}
