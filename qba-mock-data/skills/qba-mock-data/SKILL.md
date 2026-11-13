@@ -14,7 +14,6 @@ No repo, VPN or cluster access needed: only the person's own **staging admin** l
 - Synthetic only: never copy customer or merchant names, emails, phones, menus or payments. Venue names come from the generator
   (`Demo · …`) or from the person's own words (`venueNames`), never a real merchant brand.
 - Never ask for, read, print or store a password or token in the chat. The person stores their token with `login` themselves (below).
-- Never write the staging OTP code anywhere. Say "ask the QA owner for the staging test code".
 - Delete only runs the person asks to delete.
 
 ## 1. One-time: log in (the person does it, not you)
@@ -44,14 +43,14 @@ Write a JSON profile to a temp file. Fields (all optional except `country`):
 | `splitShare` | Share of bills split into 2–3 payments | 0.15 |
 | `peakHours` | Local hours traffic clusters around | `[13, 20]` |
 | `cardMix` / `walletShare` | Card brand weights / Apple-Google Pay share | per country |
-| `managerEmail` | `@qlub.io` demo manager linked to the venues, created if missing | none |
 | `configOverrides` | Restaurant config flags the pitch shows | none |
 | `seed` | Same profile + seed = same data | 42 |
 
 - Fill gaps with realistic defaults for that country and segment, and state them in the reply. Ask only when the answer changes the story of the pitch (for example, which country).
 - One run is capped at 60,000 bills (`venues × days × txPerDay max`). Split bigger asks into several runs.
 - Ready-made examples are in `presets/`.
-- **Manager login:** use the demo manager emails listed on the Confluence page "QBA Mock Data: Pitch-Ready Demo Environments On Staging (VP-3599)" (Vendor Panel space). Those accounts log in on staging without an OTP email; any other `@qlub.io` email gets a real OTP by mail.
+- **Manager login:** every run creates its own demo manager: the qlub.io address of the person whose token started the run, with `+demo-<run suffix>` before the @ (e.g. `jane.doe+demo-mwdjvydn@qlub.io`). QBA mails the login code to that person's own inbox. There is no shared account, no fixed code and nothing to choose: a `managerEmail` field is ignored. A token from an account outside qlub.io gets no manager.
+- **One run at a time** per environment: `generate` answers 409 while another run is still writing; wait and retry.
 - **Feature flags:** when the pitch shows a feature, find its restaurant config key and put it in `configOverrides`:
   - QA's Confluence pages "Functional Overview of QBA Configurations" and "… Restaurant Configurations" list the keys;
   - or ask the Panel squad.
@@ -60,16 +59,17 @@ Write a JSON profile to a temp file. Fields (all optional except `country`):
 ## 3. Run and report
 
 ```
-mockdata.sh generate /tmp/profile.json   # → runId, per venue: id, name, bills, payments, gross, tips, backfillJobId
+mockdata.sh generate /tmp/profile.json   # starts the run in the background → runId and the planned steps
+mockdata.sh status <runId>               # state + step log; once completed, per venue: id, name, bills, payments, gross, tips
 mockdata.sh list                         # every demo run; backfillState should reach "completed" within a minute or two
 mockdata.sh cleanup <runId>              # deletes exactly that run
 ```
 
-1. Run `generate`. A failed run is removed automatically; fix the profile and run it again.
+1. Run `generate`, then `status <runId>` until the state is `completed` (or `failed`). A failed run is removed automatically; fix the profile and run it again. A run shown as `interrupted` lost its server mid-way: run `cleanup <runId>`, then start again.
 2. Run `list` until each new venue's `backfillState` is `completed`. The dashboards are ready then.
 3. Reply in a few lines:
    - the run id;
    - each venue's name, id, currency, gross, tips and days;
    - flags set and anything not included;
-   - **how to show it:** QBA login screen → tap the logo 5 times → Staging → manager email → code from the QA owner;
+   - **how to show it:** QBA login screen → tap the logo 5 times → Staging → the run's demo manager address (`<your name>+demo-<run suffix>@qlub.io`) → the code QBA mails to your inbox;
    - the cleanup command.

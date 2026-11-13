@@ -2,6 +2,7 @@
 # Thin client for the staging-only admin mock-data API (VP-3599).
 #   mockdata.sh login                 # store your staging admin token (asked on stdin, never echoed)
 #   mockdata.sh generate <profile.json>
+#   mockdata.sh status <runId>
 #   mockdata.sh list
 #   mockdata.sh cleanup <runId>
 set -euo pipefail
@@ -37,7 +38,8 @@ case ${1:-} in
     umask 077; printf '%s' "${token#Bearer }" > "$TOKEN_FILE"
     echo "saved to $TOKEN_FILE" >&2;;
   generate) call POST /admin/mock-data/runs "${2:?profile.json}";;
+  status) call GET "/admin/mock-data/runs/${2:?runId}";;
   list) call GET /admin/mock-data/runs;;
   cleanup) call DELETE "/admin/mock-data/runs/${2:?runId}";;
-  *) echo "usage: $0 login | generate <profile.json> | list | cleanup <runId>" >&2; exit 2;;
+  *) echo "usage: $0 login | generate <profile.json> | status <runId> | list | cleanup <runId>" >&2; exit 2;;
 esac
