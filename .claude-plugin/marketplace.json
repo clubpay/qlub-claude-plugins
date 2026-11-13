@@ -14,7 +14,19 @@
       "source": "./publish-apk-to-ni",
       "description": "Publish an APK build to Network International's (N-Genius) SFTP server and prepare the release notification email as a Gmail draft. Prompts for the SFTP password and signer name at runtime; stores no credentials.",
       "version": "1.0.0",
-      "author": { "name": "Qlub SoftPOS Team", "email": "softpos_team@qlub.io" }
+      "author": {
+        "name": "Qlub SoftPOS Team",
+        "email": "softpos_team@qlub.io"
+      }
+    },
+    {
+      "name": "qba-mock-data",
+      "source": "./qba-mock-data",
+      "description": "Create synthetic QBA demo venues with payment history on staging from a plain description, for pitches. Uses the person's own staging admin login; staging only.",
+      "version": "1.0.0",
+      "author": {
+        "name": "Qlub Panel Squad"
+      }
     }
   ]
 }

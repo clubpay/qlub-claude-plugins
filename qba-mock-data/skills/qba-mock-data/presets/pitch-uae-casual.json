@@ -1,0 +1,22 @@
+{
+  "name": "pitch-uae-casual",
+  "country": "ae",
+  "venues": 2,
+  "cuisine": "casual",
+  "days": 60,
+  "txPerDay": [
+    30,
+    70
+  ],
+  "avgTicket": 140,
+  "tipShare": 0.45,
+  "tipRate": 0.1,
+  "splitShare": 0.2,
+  "peakHours": [
+    13,
+    20,
+    21
+  ],
+  "walletShare": 0.5,
+  "seed": 7
+}
